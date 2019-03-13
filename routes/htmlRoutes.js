@@ -1,19 +1,13 @@
-// ===============================================================================
-// DEPENDENCIES
-// We need to include the path package to get the correct file path for our html
-// ===============================================================================
+// using node to initiate a path package that allows us to path functionality in routing to different file templates
 var path = require("path");
 
 
-// ===============================================================================
-// ROUTING
-// ===============================================================================
+
+// ==================================Routing=============================================
 
 module.exports = function(app) {
   // HTML GET Requests
-  // Below code handles when users "visit" a page.
-  // In each of the below cases the user is shown an HTML page of content
-  // ---------------------------------------------------------------------------
+  //sending actual html files under some conditions
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/home.html"))
 });

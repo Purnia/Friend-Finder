@@ -1,22 +1,16 @@
-// ===============================================================================
-// LOAD DATA
-// We are linking our routes to a series of "data" sources.
-// These data sources hold arrays of information on surveys.
-// ===============================================================================
+
+// we want to link our routes to data sources. In this case, surveyData holds an array of information its getting from the survey array in freidns.js
 
 var surveyData = require("../data/friends");
 
 
-// ===============================================================================
-// ROUTING
-// ===============================================================================
+
+
+// =================================routing==============================================
 
 module.exports = function(app) {
     // API GET Requests
-    // Below code handles when users "visit" a page.
-    // In each of the below cases when a user visits a link
-    // (ex: localhost:PORT/api/admin... they are shown a JSON of the data in the table)
-    // ---------------------------------------------------------------------------
+    //when client visits api/survey it can see all the data within surveyData (in a json object)
   
     app.get("/api/survey", function(req, res) {
       res.json(surveyData);
@@ -24,16 +18,15 @@ module.exports = function(app) {
     });
 
 
-    // API POST Requests
-  // Below code handles when a user submits a form and thus submits data to the server.
-  // In each of the below cases, when a user submits form data (a JSON object)
-  // ...the JSON is pushed to the appropriate JavaScript array
-  // (ex. User fills out a reservation request... this data is then sent to the server...
-  // Then the server saves the data to the tableData array)
-  // ---------------------------------------------------------------------------
+// API POST Requests
+//when a client submits the survey form and clicks submit, the data is sent to the server (a json object).
+//the server then sends it to a js array in this case surveyArray which is saved inside surveyData
+
 
   app.post("/api/survey", function(req, res) {
     surveyData.push(req.body);
+    console.log('here is the api/survey route res: ', res)
+    res.json(res.body)
   });
 
 };

@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <title>Survey Page</title>
 
-    <!-- Latest compiled and minified CSS & JS -->
+     <!-- Some of this front end code is borrowed from 13.3 Hot Restaurant -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
 
 </head>
 
@@ -197,80 +197,97 @@
 
     </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+
+    <script type="text/javascript">
+
+
+        $(".submit").on("click", function (event) {
+            event.preventDefault();
+
+            // grabbing the form responses in an object. saving score inside an array for later use
+            var newSurvey = {
+                name: $("#name").val().trim(),
+                photo: $("#img-link").val().trim(),
+                score: [
+                    $("#question1").val().trim(),
+                    $("#question2").val().trim(),
+                    $("#question3").val().trim(),
+                    $("#question4").val().trim(),
+                    $("#question5").val().trim(),
+                    $("#question6").val().trim(),
+                    $("#question7").val().trim(),
+                    $("#question8").val().trim(),
+                    $("#question9").val().trim(),
+                    $("#question10").val().trim()
+                ]
+
+            };
+
+
+            $.post("/api/survey", newSurvey, function (err, data) {
+                //runComparison();
+                if(err) {
+                    console.log(err)
+                } else {
+                    console.log("hello world")
+                    console.log(data);
+                }
+
+            });
+
+            // $.post("/api/survey", newSurvey, function (data) {
+            //     console.log("This is going to work")
+            // })
+
+
+        });
+
+        // here is where we will have a call back that finds the best match
+
+        //clear the form after submitting
+        //  $("#name").val("");
+        // $("#img-link").val("");
+        // $("#question1").val("");
+        // $("#question2").val("");
+        // $("#question3").val("");
+        // $("#question4").val("");
+        // $("#question5").val("");
+        // $("#question6").val("");
+        // $("#question7").val("");
+        // $("#question8").val("");
+        // $("#question9").val("");
+        // $("#question10").val(""); 
+
+        //  $('.form-group').trigger("reset");
+
+
+
+        //downloading the date from the server to carry out a comparison 
+        function runComparison() {
+            $.ajax({ url: "/api/survey", method: "GET" })
+                .then(function (surveyData) {
+                    console.log("run comparison", surveyData);
+                    //here we can call on response.score and then compare? 
+                    // var user1 = [];
+                    // var user2 = [];
+
+                    // var result = 0
+                    // for (var i =0; i< user1.length; i++){
+                    //     result += (user1[i] - user2[i]; )
+                    // }
+                    // alert(result)
+                });
+        }
+
+
+
+    </script>
+
 </body>
 
+
 </html>
-
-<script type="text/javascript">
-
-
-    $(".submit").on("click", function (event) {
-        event.preventDefault();
-
-        // Here we grab the form elements
-        var newSurvey = {
-            name: $("#name").val().trim(),
-            photo: $("#img-link").val().trim(),
-            score:[
-            q1= $("#question1").val().trim(),
-            q2= $("#question2").val().trim(),
-            q3= $("#question3").val().trim(),
-            q4= $("#question4").val().trim(),
-            q5= $("#question5").val().trim(),
-            q6= $("#question6").val().trim(),
-            q7= $("#question7").val().trim(),
-            q8= $("#question8").val().trim(),
-            q9= $("#question9").val().trim(),
-            q10= $("#question10").val().trim()
-            ]
-           
-        };
-
-        console.log(newSurvey);
-
-        $.post("/api/survey", newSurvey, function () {
-            // here is where we will have a call back that finds the best match
-
-            
-
-        });
-        
-
-    });
-
-    // $('.form-group').trigger("reset");
-
-     //clear the form after submitting
-    //  $("#name").val("");
-    //         $("#img-link").val("");
-    //         $("#question1").val("");
-    //         $("#question2").val("");
-    //         $("#question3").val("");
-    //         $("#question4").val("");
-    //         $("#question5").val("");
-    //         $("#question6").val("");
-    //         $("#question7").val("");
-    //         $("#question8").val("");
-    //         $("#question9").val("");
-    //         $("#question10").val(""); 
-
-
-    //downloading the date from the server to carry out a comparison 
-    function runComparison(){
-        $.ajax({ url:"/api/survey", method: "GET"})
-        .then(function(surveyData){
-            console.log(surveyData);
-            //here we can call on response.score and then compare? 
-            // var user1 = [];
-            // var user2 = [];
-
-            // var result = 0
-            // for (var i =0; i< user1.length; i++){
-            //     result += (user1[i] - user2[i]; )
-            // }
-            // alert(result)
-        });
-    }
-
-
-</script>
